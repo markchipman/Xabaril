@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IApplicationBuilder UseXabaril(this IApplicationBuilder app, string path)
         {
-            app.UseMiddleware<XabarilMiddleware>(new PathString(path));
+            app.UseMiddleware<XabarilMiddleware>(path);
 
             return app;
         }

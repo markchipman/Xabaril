@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Template;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -9,14 +11,15 @@ namespace Xabaril
 {
     public class XabarilMiddleware
     {
+        private TemplateMatcher _requestPathMatcher;
         private readonly RequestDelegate _next;
         private readonly IFeaturesService _feturesService;
-        private readonly PathString _path;
+        private readonly string _path;
 
         public XabarilMiddleware(
             RequestDelegate next,
             IFeaturesService featuresService,
-            PathString path)
+            string path)
         {
             if (next == null)
             {
@@ -31,42 +34,55 @@ namespace Xabaril
             _next = next;
             _feturesService = featuresService;
             _path = path;
+
+            _requestPathMatcher = new TemplateMatcher(
+                TemplateParser.Parse(path),
+                new RouteValueDictionary());
         }
 
         public async Task Invoke(HttpContext context)
         {
-            if (string.Equals(context.Request.Path, _path, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(context.Request.Method, "GET", StringComparison.OrdinalIgnoreCase) &&
-                context.Request.Query.ContainsKey("featureName"))
+            if (!IsXabarilRequest(context.Request))
             {
-                var statusCode = HttpStatusCode.OK;
-                var featureName = context.Request.Query["featureName"];
-                var json = String.Empty;
+                await _next(context);
 
-                try
-                {
-                    var isEnabled = await _feturesService.IsEnabledAsync(featureName).ConfigureAwait(false);
-                    var data = new { isEnabled = isEnabled };
-                    json = JsonConvert.SerializeObject(data);
-                }
-                catch (ArgumentException)
-                {
-                    statusCode = HttpStatusCode.NotFound;
-                }
-                
-                await WriteResponseAsync(
-                    context,
-                    json,
-                    "application/json",
-                    statusCode);
+                return;
             }
             else
             {
-                await _next(context);
+                
             }
+
+            var statusCode = HttpStatusCode.OK;
+            var featureName = context.Request.Query["featureName"];
+            var json = String.Empty;
+
+            try
+            {
+                var isEnabled = await _feturesService.IsEnabledAsync(featureName).ConfigureAwait(false);
+                var data = new { isEnabled = isEnabled };
+                json = JsonConvert.SerializeObject(data);
+            }
+            catch (ArgumentException)
+            {
+                statusCode = HttpStatusCode.NotFound;
+            }
+
+            await WriteResponseAsync(
+                context,
+                json,
+                "application/json",
+                statusCode);
         }
 
-        protected Task WriteResponseAsync(
+        private bool IsXabarilRequest(HttpRequest request)
+        {
+            return request.Method == HttpMethods.Get &&
+                   _requestPathMatcher.TryMatch(request.Path, new RouteValueDictionary()) &&
+                   request.Query.ContainsKey("featureName");
+        }
+
+        private Task WriteResponseAsync(
            HttpContext context,
            string content,
            string contentType,

@@ -15,7 +15,7 @@ namespace UnitTests.Xabaril
     public class xabaril_middleware_should
     {
         private const string FeatureName = "test";
-        private const string EndPointPath = "/xabaril/features";
+        private const string EndPointPath = "xabaril/features";
 
         [Fact]
         public async Task returns_not_found_http_status_code_if_the_feature_does_not_exists()
