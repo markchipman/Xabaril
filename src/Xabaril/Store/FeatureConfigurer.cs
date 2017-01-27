@@ -36,10 +36,5 @@ namespace Xabaril.Store
 
             return this;
         }
-
-        internal void WithActivator<T>(Dictionary<string, object> parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
