@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
-using global::Xabaril;
-using global::Xabaril.Core.Activators;
+using Xabaril;
+using Xabaril.Core.Activators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using System.Linq;
 
 namespace UnitTests.Xabaril.Core.Activators
 {
@@ -84,6 +85,25 @@ namespace UnitTests.Xabaril.Core.Activators
                .Build();
 
             (await activator.IsActiveAsync("feature")).Should().Be(false);
+        }
+
+        [Fact]
+        public void use_descriptor_with_activator_name_equals_to_activator_type_name()
+        {
+            var activator = new HeaderValueActivatorBuilder()
+               .WithRuntimeParameters(new Dictionary<string, object>()
+               {
+                    { "header-name", "non_existing_header" },
+                    { "header-value", "not_valid_value" },
+               })
+               .WithDefaultHttpContextHeaders()
+               .Build();
+
+            var typeName = typeof(HeaderValueActivator).Name;
+
+            activator.Descriptors
+                .ToList()
+                .ForEach(d => d.ActivatorName.Should().BeEquivalentTo(typeName));
         }
 
         private class HeaderValueActivatorBuilder

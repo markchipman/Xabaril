@@ -107,16 +107,6 @@ namespace UnitTests.MVC
 
             app.UseStaticFiles();
 
-            app.Map("/blabla", appb =>
-             {
-                 appb.Use((context, next) =>
-                 {
-                     context.Response.Body.WriteByte((byte)12);
-
-                     return Task.CompletedTask;
-                 });
-             });
-
             app.UseMvcWithDefaultRoute();
         }
     }

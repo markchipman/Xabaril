@@ -17,7 +17,7 @@ namespace Xabaril.Core.Activators
 
         List<ActivatorParameterDescriptor> _descriptors = new List<ActivatorParameterDescriptor>()
         {
-            new ActivatorParameterDescriptor() {Name = "locations", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(RolloutUsernameActivator).Name}
+            new ActivatorParameterDescriptor() {Name = "locations", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(LocationActivator).Name}
         };
 
         public IEnumerable<ActivatorParameterDescriptor> Descriptors

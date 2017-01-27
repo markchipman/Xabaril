@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
-using global::Xabaril;
-using global::Xabaril.Core;
-using global::Xabaril.Core.Activators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Xabaril;
+using Xabaril.Core;
+using Xabaril.Core.Activators;
 using Xunit;
 
 namespace UnitTests.Xabaril.Core.Activators
@@ -55,6 +56,23 @@ namespace UnitTests.Xabaril.Core.Activators
                .Build();
 
             (await activator.IsActiveAsync("featureName")).Should().Be(true);
+        }
+
+        [Fact]
+        public void use_descriptor_with_activator_name_equals_to_activator_type_name()
+        {
+            var activator = new LocationActivatorBuilder()
+              .WithRuntimeParameters(new Dictionary<string, object>()
+              {
+                    {"locations","Spain;France" }
+              })
+              .Build();
+
+            var typeName = typeof(LocationActivator).Name;
+
+            activator.Descriptors
+                .ToList()
+                .ForEach(d => d.ActivatorName.Should().BeEquivalentTo(typeName));
         }
 
 

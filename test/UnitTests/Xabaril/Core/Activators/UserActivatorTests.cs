@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
-using global::Xabaril;
-using global::Xabaril.Core;
-using global::Xabaril.Core.Activators;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Xabaril;
+using Xabaril.Core;
+using Xabaril.Core.Activators;
 using Xunit;
 
 namespace UnitTests.Xabaril.Core.Activators
@@ -94,6 +95,24 @@ namespace UnitTests.Xabaril.Core.Activators
                 .Build();
 
             (await activator.IsActiveAsync("feature")).Should().Be(false);
+        }
+
+        [Fact]
+        public void use_descriptor_with_activator_name_equals_to_activator_type_name()
+        {
+            var activator = new UserActivatorBuilder()
+              .WithRuntimeParameters(new Dictionary<string, object>()
+              {
+                    { "user", "anhotheruser;dotnetuser;user" }
+              })
+              .WithActiveUser("why?")
+            .Build();
+
+            var typeName = typeof(UserActivator).Name;
+
+            activator.Descriptors
+                .ToList()
+                .ForEach(d => d.ActivatorName.Should().BeEquivalentTo(typeName));
         }
 
 

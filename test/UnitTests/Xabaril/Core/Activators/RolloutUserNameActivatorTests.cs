@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
-using global::Xabaril;
-using global::Xabaril.Core;
-using global::Xabaril.Core.Activators;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Xabaril;
+using Xabaril.Core;
+using Xabaril.Core.Activators;
 using Xunit;
 
 namespace UnitTests.Xabaril.Core.Activators
@@ -73,6 +74,23 @@ namespace UnitTests.Xabaril.Core.Activators
 
                 ++index;
             }
+        }
+
+        [Fact]
+        public void use_descriptor_with_activator_name_equals_to_activator_type_name()
+        {
+            var activator = new RolloutUserNameActivatorBuilder()
+                .WithRuntimeParameters(new Dictionary<string, object>()
+                {
+                    {"percentage",0d }
+                })
+              .Build();
+
+            var typeName = typeof(RolloutUsernameActivator).Name;
+
+            activator.Descriptors
+                .ToList()
+                .ForEach(d => d.ActivatorName.Should().BeEquivalentTo(typeName));
         }
 
         private class RolloutUserNameActivatorBuilder

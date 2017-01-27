@@ -18,8 +18,8 @@ namespace Xabaril.Core.Activators
 
         List<ActivatorParameterDescriptor> _descriptors = new List<ActivatorParameterDescriptor>()
         {
-            new ActivatorParameterDescriptor() {Name = "header-name", ClrType=typeof(String).Name , IsOptional = false,ActivatorName = typeof(RolloutUsernameActivator).Name},
-            new ActivatorParameterDescriptor() {Name = "percentage", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(RolloutUsernameActivator).Name},
+            new ActivatorParameterDescriptor() {Name = "header-name", ClrType=typeof(String).Name , IsOptional = false,ActivatorName = typeof(RolloutHeaderValueActivator).Name},
+            new ActivatorParameterDescriptor() {Name = "percentage", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(RolloutHeaderValueActivator).Name},
         };
 
         public IEnumerable<ActivatorParameterDescriptor> Descriptors
