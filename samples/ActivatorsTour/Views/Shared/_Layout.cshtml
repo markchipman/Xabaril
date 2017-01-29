@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ActivatorsTour</title>
+    <title>Xabaril - ActivatorsTour</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -17,31 +17,25 @@
     </environment>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ActivatorsTour</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Xabaril - Toogle Features and A/B testing library for ASP.NET Core</h2>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
+            <div class="col-md-12">
+                <img src="~/images/Xabaril.png" />
+            </div>            
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - ActivatorsTour</p>
+    
+    <div class="container">
+        @RenderBody()     
+        
+      
+
+        <footer class="footer">
+            <vc:info-panel></vc:info-panel>
+            <h4 class="text-center">&copy; 2017 - Xabaril - ActivatorsTour</h4>
         </footer>
     </div>
 
