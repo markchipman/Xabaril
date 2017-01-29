@@ -9,7 +9,7 @@ namespace ActivatorsTour
     public class IPApiLocationProvider
         : IGeoLocationProvider
     {
-        static HttpClient _client = new HttpClient() { BaseAddress = new Uri("http://ip-api.com/json") };
+        static HttpClient _client = new HttpClient() { BaseAddress = new Uri("http://ip-api.com/json/") };
 
         public async Task<string> FindLocationAsync(string ipAddress)
         {
@@ -21,7 +21,10 @@ namespace ActivatorsTour
 
                 dynamic result = JObject.Parse(content);
 
-                return result.country;
+                if (result.status.Equals("success"))
+                {
+                    return result.country;
+                }
             }
 
             return null;
