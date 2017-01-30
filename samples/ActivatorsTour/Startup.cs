@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Xabaril.Core.Activators;
-using Xabaril.Samples.UI.Components;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Xabaril.Samples.UI.Components.Middleware;
 
 namespace ActivatorsTour
