@@ -1,16 +1,58 @@
 ﻿@{
-   
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
-    <p>Xabaril Tag Helper Demo </p>
 
-    <feature name="MyFeature">
-        <div>This content is displayed only when feature MyFeature is active</div>
+
+    <div class="row top-buffer-20">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Tag Helper information</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <span>When a feature is active, it will render the inner content of the feature declared component (Watch Startup.cs file to configure Activators) </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <p><b>Xabaril Tag Helper Demo Sample: </b></p>
+
+    <feature class="top-buffer-20" name="MyFeature">
+        <div>This content is displayed only when feature <b>MyFeature</b> is <span style="color:green;font-weight:bold">Active</span></div>
     </feature>
 
     <feature name="NonExistingFeature">
         <div>Non existing features return "as disabled" if use FailureModel.LogAndDisable</div>
     </feature>
+
+
+    <div class="row top-buffer-20">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">FeatureFilter information</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <span>Decorating controller actions with FeatureFilter will result in correct view rendering when feature is active and 404 result when it is not.</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row top-buffer-20">
+        <div class="col-lg-3 col-md-3 col-sm-4">
+            <div class="list-group table-of-contents">
+                <a class="list-group-item" asp-controller="Home" asp-action="FiltersActive">Navigate to FiltersActive <span class="enabled-feature">(Enabled)</span></a>
+                <a class="list-group-item" asp-controller="Home" asp-action="FiltersNonActive">Navigate to FiltersNonActive <span class="disabled-feature">(Disabled)</span></a>
+            </div>
+        </div>
+
+    </div>
+
 
 </div>
