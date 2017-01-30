@@ -36,6 +36,5 @@ namespace Xabaril.Store
 
             return this;
         }
-
     }
 }

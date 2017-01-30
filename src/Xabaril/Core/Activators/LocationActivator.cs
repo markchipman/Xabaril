@@ -17,7 +17,7 @@ namespace Xabaril.Core.Activators
 
         List<ActivatorParameterDescriptor> _descriptors = new List<ActivatorParameterDescriptor>()
         {
-            new ActivatorParameterDescriptor() {Name = "locations", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(RolloutUsernameActivator).Name}
+            new ActivatorParameterDescriptor() {Name = "locations", ClrType=typeof(Double).Name , IsOptional = false,ActivatorName = typeof(LocationActivator).Name}
         };
 
         public IEnumerable<ActivatorParameterDescriptor> Descriptors
@@ -53,12 +53,16 @@ namespace Xabaril.Core.Activators
                 var requestIp = _httpContextAccesor.HttpContext
                     .Connection
                     .RemoteIpAddress
+                    .MapToIPv4()
                     .ToString();
 
                 var location = await _geoLocationProvider.FindLocationAsync(requestIp);
 
-                active = splittedLocations
-                    .Any(item => item.Equals(location, StringComparison.CurrentCultureIgnoreCase));
+                if (location != null)
+                {
+                    active = splittedLocations
+                        .Any(item => item.Equals(location, StringComparison.CurrentCultureIgnoreCase));
+                }
             }
 
             return active;

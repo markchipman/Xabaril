@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
-using global::Xabaril;
-using global::Xabaril.Core.Activators;
+using Xabaril;
+using Xabaril.Core.Activators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using System.Linq;
 
 namespace UnitTests.Xabaril.Core.Activators
 {
@@ -75,6 +76,25 @@ namespace UnitTests.Xabaril.Core.Activators
 
                 ++index;
             }
+        }
+
+        [Fact]
+        public void use_descriptor_with_activator_name_equals_to_activator_type_name()
+        {
+            var activator = new RolloutHeaderValueActivatorBuilder()
+               .WithRuntimeParameters(new Dictionary<string, object>()
+               {
+                    { "header-name", "existing_header" },
+                    { "percentage", 0d },
+               })
+               .WithHeaderValue("existing_header", "some_value")
+              .Build();
+
+            var typeName = typeof(RolloutHeaderValueActivator).Name;
+
+            activator.Descriptors
+                .ToList()
+                .ForEach(d => d.ActivatorName.Should().BeEquivalentTo(typeName));
         }
 
         private class RolloutHeaderValueActivatorBuilder

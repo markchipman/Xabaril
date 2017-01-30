@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Xabaril;
 using Xabaril.Store;
 using Xabaril.Core.Activators;
+using Xabaril.Samples.UI.Components.Middleware;
 
 namespace InMemory
 {
@@ -39,6 +40,7 @@ namespace InMemory
                     });
                 });
 
+            services.RegisterSampleComponents();
             services.AddMvc();
         }
 
