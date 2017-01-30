@@ -28,6 +28,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MVC", "samples\MVC\MVC.xpro
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ActivatorsTour", "samples\ActivatorsTour\ActivatorsTour.xproj", "{2D70ACB3-56CA-4081-8C33-3CF0279861F1}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Xabaril.Samples.UI.Components", "samples\Xabaril.Samples.UI.Components\Xabaril.Samples.UI.Components.xproj", "{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{2D70ACB3-56CA-4081-8C33-3CF0279861F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D70ACB3-56CA-4081-8C33-3CF0279861F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D70ACB3-56CA-4081-8C33-3CF0279861F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +80,6 @@ Global
 		{5FC26916-7484-4095-8011-F63F4243A30C} = {848B4CDD-AFEB-43DC-8C98-50CAD2032760}
 		{9C1F242B-A98D-47B1-BD0C-E19AE8646FC1} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
 		{2D70ACB3-56CA-4081-8C33-3CF0279861F1} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
+		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
 	EndGlobalSection
 EndGlobal

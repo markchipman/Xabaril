@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ActivatorsTour
+namespace Xabaril.Samples.UI.Components
 {
     [ViewComponent(Name = "InfoPanel")]
     public class InfoPanelViewComponent : ViewComponent

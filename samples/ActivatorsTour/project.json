@@ -23,7 +23,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Xabaril": "1.0.0-beta-*",
     "Xabaril.MVC": "1.0.0-*",
-    "Xabaril.InMemoryStore": "1.0.0-beta-*"
+    "Xabaril.InMemoryStore": "1.0.0-beta-*",
+    "Xabaril.Samples.UI.Components": "1.0.0-*"    
   },
 
   "tools": {
