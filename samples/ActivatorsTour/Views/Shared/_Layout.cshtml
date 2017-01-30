@@ -17,27 +17,11 @@
     </environment>
 </head>
 <body>
+    <vc:header></vc:header>    
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Xabaril - Toogle Features and A/B testing library for ASP.NET Core</h2>
-            </div>
-            <div class="col-md-12">
-                <img src="~/images/Xabaril.png" />
-            </div>            
-        </div>
+        @RenderBody()           
     </div>
-    
-    <div class="container">
-        @RenderBody()     
-        
-      
-
-        <footer class="footer">
-            <vc:info-panel></vc:info-panel>
-            <h4 class="text-center">&copy; 2017 - Xabaril - ActivatorsTour</h4>
-        </footer>
-    </div>
+    <vc:footer></vc:footer>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

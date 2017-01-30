@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using Xabaril;
 using Xabaril.Core.Activators;
+using Xabaril.Samples.UI.Components.Middleware;
 
 namespace MVC
 {
@@ -39,7 +40,7 @@ namespace MVC
                    });
                });
 
-            
+            services.RegisterSampleComponents();
             services.AddMvc();
         }
 

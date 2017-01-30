@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xabaril.Core.Activators;
+using Xabaril.Samples.UI.Components.Middleware;
 
 namespace ActivatorsTour
 {
@@ -39,6 +36,9 @@ namespace ActivatorsTour
                         .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
                 }).AddGeoLocationProvider<IPApiLocationProvider>();
 
+
+            services.RegisterSampleComponents();
+
             services.AddMvc();
         }
 
@@ -58,8 +58,8 @@ namespace ActivatorsTour
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
+            app.UseStaticFiles();          
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
