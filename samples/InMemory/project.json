@@ -5,11 +5,6 @@
       "type": "platform"
     },
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
-    "Microsoft.AspNetCore.Mvc":"1.1.0",
-    "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
-      "type": "build"
-    },
     "Microsoft.AspNetCore.Routing": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
@@ -23,12 +18,17 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Xabaril": "1.0.0-beta-*",
     "Xabaril.InMemoryStore": "1.0.0-beta-*",
-    "Xabaril.Samples.UI.Components": "1.0.0-*"
+    "Xabaril.Samples.UI.Components": "1.0.0-*",
+    "Microsoft.AspNetCore.Razor.Tools": {
+      "version": "1.1.0-preview4-final",
+      "type": "build"
+    },
+    "Microsoft.AspNetCore.Mvc": "1.1.1"
   },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",
-    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
+    "Microsoft.AspNetCore.Razor.Tools": "1.1.0-preview4-final",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
   },
 

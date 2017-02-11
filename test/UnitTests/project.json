@@ -10,14 +10,14 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "Microsoft.AspNetCore.TestHost": "1.1.0",
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "Microsoft.Extensions.Caching.Memory": "1.1.0",
     "Xabaril": "1.0.0-*",
     "System.Reflection": "4.3.0",
     "Xabaril.InMemoryStore": "1.0.0-*",
     "FluentAssertions": "4.18.0",
-    "MVC": "1.0.0-*"
+    "MVC": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.1.1"
   },
   "buildOptions": {
     "warningsAsErrors": true
