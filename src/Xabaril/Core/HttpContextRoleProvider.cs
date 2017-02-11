@@ -24,21 +24,17 @@ namespace Xabaril.Core
         public Task<string> GetRoleAsync()
         {
             var httpContext = _httpContextAccesor.HttpContext;
+            var identity = httpContext?.User?.Identities.First();
 
-            var claims = httpContext?.User?.Claims;
-
-            if (claims != null)
+            if (identity == null || identity.IsAuthenticated == false)
             {
-                var roleClaim =  claims.Where(c => c.Type == ClaimTypes.Role)
-                    .FirstOrDefault();
-
-                if (roleClaim != null)
-                {
-                    return Task.FromResult<string>(roleClaim.Value);
-                }
+                return Task.FromResult<string>(null);
             }
 
-            return Task.FromResult<string>(null);
+            var role = identity.Claims
+                    .FirstOrDefault(c => c.Type == identity.RoleClaimType)?.Value;
+
+            return Task.FromResult<string>(role);
         }
     }
 }
