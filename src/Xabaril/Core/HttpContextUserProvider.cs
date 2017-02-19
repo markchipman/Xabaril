@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
 namespace Xabaril.Core
@@ -16,9 +17,15 @@ namespace Xabaril.Core
         public Task<string> GetUserNameAsync()
         {
             var httpContext = _httpContextAccesor.HttpContext;
+            var identity = httpContext?.User?.Identities.First();
+
+            if (identity == null || identity.IsAuthenticated == false)
+            {
+                return Task.FromResult<string>(null);
+            }
 
             return Task.FromResult<string>(
-                httpContext?.User?.Identity.Name);
+                identity.Name);
         }
     }
 }

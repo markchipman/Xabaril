@@ -1,9 +1,9 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.1.1",
     "NETStandard.Library": "1.6.1",
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Xabaril": "1.0.0-beta-*"
   },
 
