@@ -1,11 +1,10 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.1.0",
       "type": "platform"
     },
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.1.0-preview4-final",
       "type": "build"
@@ -24,7 +23,8 @@
     "Xabaril": "1.0.0-beta-*",
     "Xabaril.MVC": "1.0.0-*",
     "Xabaril.InMemoryStore": "1.0.0-beta-*",
-    "Xabaril.Samples.UI.Components": "1.0.0-*"    
+    "Xabaril.Samples.UI.Components": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.1.1"    
   },
 
   "tools": {
