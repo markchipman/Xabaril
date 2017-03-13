@@ -1,21 +1,7 @@
 version: '{build}'  
-pull_requests:  
-  do_not_increment_build_number: true
-branches:  
-  only:
-  - master
-nuget:  
-  disable_publish_on_pr: true
-image: Visual Studio 2017 RC
+image: Visual Studio 2017
 build:
-    parallel: true
-
-    publish_nuget: true
-
-    verbosity: minimal
-artifacts:  
-- path: .\artifacts\**\*.nupkg
-  name: NuGet
+  verbosity: minimal
 deploy:  
 - provider: NuGet
   server: https://www.myget.org/F/xabaril/api/v2/package
