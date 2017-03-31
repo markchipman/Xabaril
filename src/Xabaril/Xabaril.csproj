@@ -15,6 +15,9 @@
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

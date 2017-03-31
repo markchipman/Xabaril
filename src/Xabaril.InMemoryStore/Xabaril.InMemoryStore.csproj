@@ -16,6 +16,9 @@
     <FileVersion>1.0.0.1</FileVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Xabaril</Authors>
+    <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

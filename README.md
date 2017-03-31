@@ -63,6 +63,10 @@ For particular needs and customization of execution blocks we can use the servic
 
 ```
 
+### Javascript or http clients
+
+ (TO BE COMPLETED)
+
 ## Activators
 
 

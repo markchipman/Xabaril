@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Xabaril")]
 [assembly: AssemblyProduct("Xabaril")]
 [assembly: AssemblyTrademark("")]
 

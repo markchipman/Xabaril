@@ -14,6 +14,10 @@
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <Authors>Xabaril</Authors>
+    <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
+    <Copyright></Copyright>
+    <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
