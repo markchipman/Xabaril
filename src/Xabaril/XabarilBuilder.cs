@@ -11,15 +11,9 @@ namespace Xabaril
             get;
         }
 
-
         public XabarilBuilder(IServiceCollection serviceCollection)
         {
-            if (serviceCollection == null)
-            {
-                throw new ArgumentNullException(nameof(serviceCollection));
-            }
-
-            Services = serviceCollection;
+            Services = serviceCollection ?? throw new ArgumentNullException(nameof(serviceCollection));
         }
     }
 }

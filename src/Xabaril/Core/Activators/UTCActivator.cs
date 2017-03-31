@@ -23,8 +23,8 @@ namespace Xabaril.Core.Activators
         public UTCActivator(ILogger<XabarilModule> logger,
             IRuntimeParameterAccessor runtimeParameterAccessor)
         {
-            _logger = logger;
-            _runtimeParameterAccessor = runtimeParameterAccessor;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _runtimeParameterAccessor = runtimeParameterAccessor ?? throw new ArgumentNullException(nameof(runtimeParameterAccessor));
         }
 
         public async Task<bool> IsActiveAsync(string featureName)

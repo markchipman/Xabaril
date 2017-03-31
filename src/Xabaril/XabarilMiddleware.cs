@@ -21,18 +21,8 @@ namespace Xabaril
             IFeaturesService featuresService,
             string path)
         {
-            if (next == null)
-            {
-                throw new ArgumentNullException(nameof(next));
-            }
-
-            if (featuresService == null)
-            {
-                throw new ArgumentNullException(nameof(featuresService));
-            }
-
-            _next = next;
-            _feturesService = featuresService;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
+            _feturesService = featuresService ?? throw new ArgumentNullException(nameof(featuresService));
             _path = path;
 
             _requestPathMatcher = new TemplateMatcher(

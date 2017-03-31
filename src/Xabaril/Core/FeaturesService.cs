@@ -19,25 +19,11 @@ namespace Xabaril.Core
             IFeaturesStore featuresStore,
             SingleInstanceFactory singleInstanceFactory)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            if (featuresStore == null)
-            {
-                throw new ArgumentNullException(nameof(featuresStore));
-            }
-
-            if (singleInstanceFactory == null)
-            {
-                throw new ArgumentNullException(nameof(singleInstanceFactory));
-            }
-
-            _xabarilOptions = options.Value ?? new XabarilOptions();
-            _logger = logger;
-            _featuresStore = featuresStore;
-            _singleInstanceFactory = singleInstanceFactory;
+            _featuresStore = featuresStore ?? throw new ArgumentNullException(nameof(featuresStore));
+            _singleInstanceFactory = singleInstanceFactory ?? throw new ArgumentNullException(nameof(singleInstanceFactory));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _xabarilOptions = options?.Value ?? new XabarilOptions();
+          
         }
 
         public async Task<bool> IsEnabledAsync(string featureName)

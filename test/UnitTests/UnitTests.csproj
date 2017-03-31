@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Xabaril.RedisStore\Xabaril.RedisStore.csproj" />
     <ProjectReference Include="..\..\src\Xabaril\Xabaril.csproj" />
     <ProjectReference Include="..\..\src\Xabaril.InMemoryStore\Xabaril.InMemoryStore.csproj" />
     <ProjectReference Include="..\..\samples\MVC\MVC.csproj" />

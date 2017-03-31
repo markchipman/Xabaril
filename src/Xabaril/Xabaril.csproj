@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>1.0.0-beta</VersionPrefix>
-    <TargetFramework>netstandard1.6.1</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Xabaril</AssemblyName>
     <PackageId>Xabaril</PackageId>

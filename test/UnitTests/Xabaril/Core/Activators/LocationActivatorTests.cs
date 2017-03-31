@@ -62,6 +62,7 @@ namespace UnitTests.Xabaril.Core.Activators
         public void use_descriptor_with_activator_name_equals_to_activator_type_name()
         {
             var activator = new LocationActivatorBuilder()
+                .WithCurrentActualLocation("SPAIN")
               .WithRuntimeParameters(new Dictionary<string, object>()
               {
                     {"locations","Spain;France" }

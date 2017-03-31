@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActivatorsTour", "samples\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xabaril.Samples.UI.Components", "samples\Xabaril.Samples.UI.Components\Xabaril.Samples.UI.Components.csproj", "{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xabaril.RedisStore", "src\Xabaril.RedisStore\Xabaril.RedisStore.csproj", "{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "test\FunctionalTests\FunctionalTests.csproj", "{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +88,7 @@ Global
 		{9C1F242B-A98D-47B1-BD0C-E19AE8646FC1} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
 		{2D70ACB3-56CA-4081-8C33-3CF0279861F1} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
 		{6FD7EF11-C683-46AF-9C27-8D072F8EA92B} = {5520A18E-F65A-441F-B6F1-4FDFA454419E}
+		{0ED6F4E8-0661-4A2B-B80A-CAFED0AB3CED} = {848B4CDD-AFEB-43DC-8C98-50CAD2032760}
+		{F6D690B7-B5A8-4FD2-9848-CAAD624E4D0D} = {A2C35585-C45D-436D-83EA-86C1E357771A}
 	EndGlobalSection
 EndGlobal

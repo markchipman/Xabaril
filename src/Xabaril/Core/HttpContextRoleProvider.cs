@@ -13,12 +13,7 @@ namespace Xabaril.Core
 
         public HttpContextRoleProvider(IHttpContextAccessor httpContextAccessor)
         {
-            if (httpContextAccessor == null)
-            {
-                throw new ArgumentNullException(nameof(httpContextAccessor));
-            }
-
-            _httpContextAccesor = httpContextAccessor;
+            _httpContextAccesor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public Task<string> GetRoleAsync()

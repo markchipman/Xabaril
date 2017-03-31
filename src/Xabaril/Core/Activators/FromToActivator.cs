@@ -29,13 +29,8 @@ namespace Xabaril.Core.Activators
 
         public FromToActivator(ILogger<XabarilModule> logger, IRuntimeParameterAccessor runtimeParameterAccessor)
         {
-            if (runtimeParameterAccessor == null)
-            {
-                throw new ArgumentNullException(nameof(runtimeParameterAccessor));
-            }
-
-            _logger = logger;
-            _runtimeParameterAccessor = runtimeParameterAccessor;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _runtimeParameterAccessor = runtimeParameterAccessor ?? throw new ArgumentNullException(nameof(runtimeParameterAccessor));
         }
 
         public async Task<bool> IsActiveAsync(string featureName)

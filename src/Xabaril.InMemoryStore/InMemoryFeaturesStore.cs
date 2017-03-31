@@ -18,8 +18,8 @@ namespace Xabaril.InMemoryStore
 
         public InMemoryFeaturesStore(ILogger<XabarilModule> logger, IMemoryCache memoryCache)
         {
-            _logger = logger;
-            _memoryCache = memoryCache;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
         }
 
         public Task<Feature> FindFeatureAsync(string featureName)

@@ -32,9 +32,9 @@ namespace Xabaril.Core.Activators
             IRuntimeParameterAccessor runtimeParameterAccessor,
             IUserProvider userProvider)
         {
-            _logger = logger;
-            _runtimeParameterAccessor = runtimeParameterAccessor;
-            _userProvider = userProvider;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _runtimeParameterAccessor = runtimeParameterAccessor ?? throw new ArgumentNullException(nameof(runtimeParameterAccessor));
+            _userProvider = userProvider ?? throw new ArgumentNullException(nameof(userProvider));
         }
 
         public async Task<bool> IsActiveAsync(string featureName)

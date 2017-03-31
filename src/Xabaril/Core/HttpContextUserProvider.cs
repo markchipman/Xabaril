@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Xabaril.Core
@@ -11,7 +12,7 @@ namespace Xabaril.Core
 
         public HttpContextUserProvider(IHttpContextAccessor httpContextAccesor)
         {
-            _httpContextAccesor = httpContextAccesor;
+            _httpContextAccesor = httpContextAccesor ?? throw new ArgumentNullException(nameof(httpContextAccesor));
         }
 
         public Task<string> GetUserNameAsync()

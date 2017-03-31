@@ -40,11 +40,8 @@ namespace Xabaril.MVC
 
             public FeatureResourceFilter(IFeaturesService featuresService,string featureName)
             {
-                if (featuresService == null)
-                {
-                    throw new ArgumentNullException(nameof(featuresService));
-                }
-
+                _featuresService = featuresService ?? throw new ArgumentNullException(nameof(featuresService));
+                
                 if (String.IsNullOrWhiteSpace(featureName))
                 {
                     throw new ArgumentNullException(nameof(featureName));

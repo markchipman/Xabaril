@@ -12,7 +12,7 @@ namespace Xabaril.Core.Activators
     {
         private readonly ILogger<XabarilModule> _logger;
         private readonly IRuntimeParameterAccessor _runtimeParameterAccessor;
-        private readonly IHttpContextAccessor _httpContextAccesor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IGeoLocationProvider _geoLocationProvider;
 
         List<ActivatorParameterDescriptor> _descriptors = new List<ActivatorParameterDescriptor>()
@@ -30,13 +30,13 @@ namespace Xabaril.Core.Activators
 
         public LocationActivator(ILogger<XabarilModule> logger,
             IRuntimeParameterAccessor runtimeParameterAccessor,
-            IHttpContextAccessor httpContextAccesor,
+            IHttpContextAccessor httpContextAccessor,
             IGeoLocationProvider geoLocationProvider)
         {
-            _logger = logger;
-            _runtimeParameterAccessor = runtimeParameterAccessor;
-            _httpContextAccesor = httpContextAccesor;
-            _geoLocationProvider = geoLocationProvider;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _runtimeParameterAccessor = runtimeParameterAccessor ?? throw new ArgumentNullException(nameof(runtimeParameterAccessor));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _geoLocationProvider = geoLocationProvider ?? throw new ArgumentNullException(nameof(geoLocationProvider));
         }
 
         public async Task<bool> IsActiveAsync(string featureName)
@@ -50,7 +50,7 @@ namespace Xabaril.Core.Activators
             {
                 var splittedLocations = locations.Split(';');
 
-                var requestIp = _httpContextAccesor.HttpContext
+                var requestIp = _httpContextAccessor.HttpContext
                     .Connection
                     .RemoteIpAddress
                     .MapToIPv4()

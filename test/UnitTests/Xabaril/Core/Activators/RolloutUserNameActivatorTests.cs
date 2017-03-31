@@ -80,6 +80,7 @@ namespace UnitTests.Xabaril.Core.Activators
         public void use_descriptor_with_activator_name_equals_to_activator_type_name()
         {
             var activator = new RolloutUserNameActivatorBuilder()
+                .WithActiveUsers(new string[] { "user1"})
                 .WithRuntimeParameters(new Dictionary<string, object>()
                 {
                     {"percentage",0d }

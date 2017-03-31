@@ -86,6 +86,7 @@ namespace UnitTests.Xabaril.Core.Activators
         public void use_descriptor_with_activator_name_equals_to_activator_type_name()
         {
             var activator = new RoleActivatorBuilder()
+                 .WithDefaultActiveRole("SuperAdmin")
                  .WithRuntimeParameters(new Dictionary<string, object>()
                  {
                     { "role", "sUpErAdMin" }
@@ -113,7 +114,7 @@ namespace UnitTests.Xabaril.Core.Activators
 
                 var runtimeParameterAccessor = RuntimeParameterAccessorBuilder.Build(_parameters);
 
-                return new RoleActivator(logger, runtimeParameterAccessor,  _roleProvider);
+                return new RoleActivator(logger, runtimeParameterAccessor, _roleProvider);
             }
 
             public RoleActivatorBuilder WithRuntimeParameters(Dictionary<string, object> parameters)

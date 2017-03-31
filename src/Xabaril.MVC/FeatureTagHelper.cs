@@ -19,10 +19,7 @@ namespace Xabaril.MVC
 
         public FeatureTagHelper(IFeaturesService featuresService)
         {
-            if (featuresService == null)
-            {
-                throw new ArgumentNullException(nameof(featuresService));
-            }
+            _featuresService = featuresService ?? throw new ArgumentNullException(nameof(featuresService));
 
             _featuresService = featuresService;
         }

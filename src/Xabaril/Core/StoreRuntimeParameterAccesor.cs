@@ -7,7 +7,6 @@ using Xabaril.Store;
 
 namespace Xabaril.Core
 {
-   
     public sealed class StoreRuntimeParameterAccesor
         : IRuntimeParameterAccessor
     {
@@ -18,18 +17,8 @@ namespace Xabaril.Core
             ILogger<XabarilModule> logger,
             IFeaturesStore featuresStore)
         {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-
-            if (featuresStore == null)
-            {
-                throw new ArgumentNullException(nameof(featuresStore));
-            }
-
-            _logger = logger;
-            _featuresStore = featuresStore;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _featuresStore = featuresStore ?? throw new ArgumentNullException(nameof(featuresStore));
         }
 
         public async Task<TType> GetValueAsync<TType>(

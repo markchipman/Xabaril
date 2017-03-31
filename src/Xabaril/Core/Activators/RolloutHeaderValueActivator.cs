@@ -14,7 +14,7 @@ namespace Xabaril.Core.Activators
 
         private ILogger<XabarilModule> _logger;
         private IRuntimeParameterAccessor _runtimeParameterAccessor;
-        private IHttpContextAccessor _httpContextAccesor;
+        private IHttpContextAccessor _httpContextAccessor;
 
         List<ActivatorParameterDescriptor> _descriptors = new List<ActivatorParameterDescriptor>()
         {
@@ -34,9 +34,9 @@ namespace Xabaril.Core.Activators
             IRuntimeParameterAccessor runtimeParameterAccessor,
             IHttpContextAccessor httpContextAccessor)
         {
-            _logger = logger;
-            _runtimeParameterAccessor = runtimeParameterAccessor;
-            _httpContextAccesor = httpContextAccessor;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _runtimeParameterAccessor = runtimeParameterAccessor ?? throw new ArgumentNullException(nameof(runtimeParameterAccessor));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public async Task<bool> IsActiveAsync(string featureName)
@@ -51,7 +51,7 @@ namespace Xabaril.Core.Activators
 
             if (headerName != null)
             {
-                var headerValues = _httpContextAccesor.HttpContext.Request
+                var headerValues = _httpContextAccessor.HttpContext.Request
                     .Headers[headerName];
 
                 var value = headerValues[0] ?? DEFAULT_HEADER_VALUE;
