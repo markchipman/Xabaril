@@ -10,7 +10,17 @@ namespace Xabaril.RedisStore
 
         public List<FeatureConfigurer> FeatureConfiguration => _featuresConfiguration;
 
-        public string RedisHost => _defaultRedisHost;
+        public string RedisHost
+        {
+            get
+            {
+                return _defaultRedisHost;
+            }
+            set
+            {
+                _defaultRedisHost = value;
+            }
+        }
 
         public FeatureConfigurer AddFeature(string featureName)
         {

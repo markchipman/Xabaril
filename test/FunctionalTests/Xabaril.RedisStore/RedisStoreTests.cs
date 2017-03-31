@@ -26,7 +26,6 @@ namespace FunctionalTests.Xabaril.RedisStore
                 {
                     parameters.Add("release-date", DateTime.UtcNow.AddDays(1));
                 });
-
             var result = await store.PersistConfiguratioAsync(new List<FeatureConfigurer>()
             {
                 configurer
