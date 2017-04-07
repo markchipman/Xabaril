@@ -42,7 +42,7 @@ A **Feature** is basically a name which allow us to define a particular feature.
 5. Now we can make calls to the Xabaril endpoint to check if our feature is active:
 
 	```
-	http://server:port/xabaril/?featureName=MyFeature
+	http://server:port/xabaril/features?featureName=MyFeature
 	```
 6. At this point, you can view the generated JSON
 
