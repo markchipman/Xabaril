@@ -7,7 +7,59 @@
 
 A **Feature** is basically a name which allow us to define a particular feature. Each feature can be enabled based on particular activators, which depending on their configuration will tell us the state of it. Check if a feature is enabled or not can be done in several ways, and it will depend on the framework we are using or particular needs of each case.
 
+### Getting Started
+
+1. Install the standard Nuget package into your ASP.NET Core application.
+
+	```
+    Install-Package Xabaril
+	```
+
+2. Install the InMemoryStore Nuget package into your ASP.NET Core application.
+
+	```
+    Install-Package Xabaril.InMemoryStore
+	```
+2. In the _ConfigureServices_ method of _Startup.cs_, register Xabaril, defining one or more features.
+
+	```csharp
+	services
+		.AddXabaril()
+		.AddXabarilInMemoryStore(opt =>
+		{
+			opt.AddFeature("MyFeature")
+			.WithActivator<UTCActivator>(parameters =>
+			{
+				parameters.Add("release-date", DateTime.UtcNow.AddDays(-1));
+			});
+		});
+	```
+4. In the _Configure_ method, insert middleware to expose the generated Xabaril as JSON endpoint.
+
+	```csharp
+	app.UseXabaril("xabaril/features")
+	```
+5. Now we can make calls to the Xabaril endpoint to check if our feature is active:
+
+	```
+	http://server:port/xabaril/?featureName=MyFeature
+	```
+6. At this point, you can view the generated JSON
+
+	```json
+	{
+	   "isEnabled" : true
+	}
+	```
+You can use this approach in JavaScript or Http clients. We can see other ways to consume Xabaril in MVC and use another stores.
+
 ### ASP.NET MVC Core
+
+Install the standard Nuget package into your ASP.NET Core application.
+
+```
+Install-Package Xabaril.MVC
+```
 
 With **ASP.NET MVC Core** we have different options to check if a feature is enabled, for example we can use the **Tag Helper** **feature** inside our Razor views.
 
@@ -62,10 +114,6 @@ For particular needs and customization of execution blocks we can use the servic
     }
 
 ```
-
-### Javascript or http clients
-
- (TO BE COMPLETED)
 
 ## Activators
 
@@ -215,6 +263,11 @@ At this moment you can use two diferent stores, memory and Redis, to save your f
 
 ### InMemory
 
+Install the InMemoryStore Nuget package into your ASP.NET Core application.
+
+```
+Install-Package Xabaril.InMemoryStore
+```
 *InMemoryFeaturesStore* depend on  ASP.NET Core *IMemoryCache* and save all features configuration in memory.
 
 
@@ -235,7 +288,11 @@ At this moment you can use two diferent stores, memory and Redis, to save your f
 ```
 
 ### Redis
+Install the InMemoryStore Nuget package into your ASP.NET Core application.
 
+```
+Install-Package Xabaril.RedisStore
+```
 *RedisFeaturesStore*  depend on ServiceStack.Redis packages and save all the features configuration on Redis Server.
 
 
