@@ -89,7 +89,7 @@ If we want to define different behaviors, when the feature is active and when no
 
 ```csharp
 
-    [FeatureFilter(FeatureName ="MyFeature")]
+    [FeatureToogle(FeatureName ="MyFeature")]
     [ActionName("someaction")]
     public IActionResult SomeActionWhenFeatureIsActive()
     {
