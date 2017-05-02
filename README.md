@@ -71,7 +71,7 @@ With **ASP.NET MVC Core** we have different options to check if a feature is ena
 
 ```
 
-If we want to enable or disable the execution of a controller we can do it using the filter **FeatureFilter**.
+If we want to enable or disable the execution of a controller we can do it using the filter **FeatureFilter**. In this case, if the feature *MyFeature* is not enabled a NotFound is returned.
 
 ```csharp
 
@@ -81,6 +81,25 @@ If we want to enable or disable the execution of a controller we can do it using
         //if the filter is active this is processed
 
         return View();
+    }
+
+```
+
+If we want to define different behaviors, when the feature is active and when not you can use **FeatureToogle** instead of **FeatureFilter**.
+
+```csharp
+
+    [FeatureFilter(FeatureName ="MyFeature")]
+    [ActionName("someaction")]
+    public IActionResult SomeActionWhenFeatureIsActive()
+    {
+        return View("FeatureView");
+    }
+
+    [ActionName("someaction")]
+    public IActionResult SomeActionWhenFeatureIsNotActive()
+    {
+        return View("DefaultView");
     }
 
 ```

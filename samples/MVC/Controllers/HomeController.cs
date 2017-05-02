@@ -11,7 +11,7 @@ namespace MVC.Controllers
             return View();
         }
 
-        [FeatureFilter(FeatureName ="MyFeature")]
+        [FeatureFilterAttribute(FeatureName ="MyFeature")]
         public IActionResult FiltersActive()
         {
             //if the filter is active this is processed
@@ -19,7 +19,7 @@ namespace MVC.Controllers
             return View();
         }
 
-        [FeatureFilter(FeatureName = "NonExistingFeature")]
+        [FeatureFilterAttribute(FeatureName = "NonExistingFeature")]
         public IActionResult FiltersNonActive()
         {
             //the feature is not active,  404 is returned

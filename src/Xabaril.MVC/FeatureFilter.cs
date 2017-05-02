@@ -8,7 +8,7 @@ using Xabaril.Core;
 namespace Xabaril.MVC
 {
     [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method,AllowMultiple =true,Inherited =true)]
-    public class FeatureFilter
+    public class FeatureFilterAttribute
         : Attribute,IFilterFactory
     {
         public string FeatureName { get; set; }
@@ -25,13 +25,7 @@ namespace Xabaril.MVC
             }
         }
 
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReusable => false;
 
         private class FeatureResourceFilter : IAsyncResourceFilter
         {
