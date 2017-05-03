@@ -42,8 +42,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<LocationActivator>()
                 .AddScoped<RolloutHeaderValueActivator>()
                 .AddScoped<RolloutUsernameActivator>()
-                .AddScoped<UserActivator>()
-                .AddScoped<RoleActivator>());
+                .AddScoped<UserActivator>()                
+                .AddScoped<RoleActivator>()
+                .AddScoped<FromToActivator>());
 
             return serviceCollection;
         }
