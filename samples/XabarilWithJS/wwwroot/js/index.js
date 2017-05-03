@@ -1,7 +1,7 @@
 ﻿var app = new Vue({
     el: '#app',
     data: {        
-        xabarilUrl: `${window.location.href}/xabaril?featureName=`,
+        xabarilUrl: `${window.location.href}xabaril?featureName=`,
         features: ['UtcFeature#1', 'FromToFeature#1', 'UserAuthenticatedFeature#1'],
         featuresStatus : []
     },   
@@ -31,12 +31,3 @@
         }
     }
 });
-
-
-
-
-
-
-
-
-

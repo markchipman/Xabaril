@@ -13,9 +13,8 @@ namespace JavascriptMiddlewareConsumption
 {
     public class Startup
     {
-        
         public void ConfigureServices(IServiceCollection services)
-        {           
+        {         
             
             services.AddXabaril()
                     .AddXabarilOptions(options =>
@@ -41,10 +40,7 @@ namespace JavascriptMiddlewareConsumption
                        parameters.Add("user","user1;user2;user3");
                    });
                 });
-
-
         }
-
        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
