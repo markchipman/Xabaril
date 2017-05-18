@@ -1,3 +1,5 @@
+
+![AppVeyor ](https://ci.appveyor.com/api/projects/status/86ovvsglf9x729d6/branch/master?svg=true)
 # Xabaril
 
 
