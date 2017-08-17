@@ -22,7 +22,6 @@ namespace UnitTests.MVC
             var builder = new WebHostBuilder()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<TestStartup>()
-                .UseIISIntegration()
                 .UseEnvironment("Testing");
 
             var server = new TestServer(builder);
@@ -58,9 +57,6 @@ namespace UnitTests.MVC
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddDebug();
-
-            app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
         }

@@ -1,24 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
     <Authors>Xabaril</Authors>
     <Company />
     <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
+    <Description>Xabaril Redis Store integration</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_6_1</DefineConstants>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ServiceStack.Redis.Core" Version="1.0.38" />
+    <PackageReference Include="ServiceStack.Redis.Core" Version="1.0.43" />
   </ItemGroup>
 
   <ItemGroup>
