@@ -1,0 +1,45 @@
+﻿<Project>
+  <PropertyGroup Label="SDK Versions">
+    <NetStandardTargetVersion>netstandard2.0</NetStandardTargetVersion>
+    <NetCoreTargetVersion>netcoreapp2.1</NetCoreTargetVersion>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package information">
+    <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/README.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
+    <Authors>Xabaril Contributors</Authors>
+    <Company>Xabaril</Company>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>true</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Versions">
+    <FluentAssertions>5.5.3</FluentAssertions>
+    <MicrosoftAspNetCoreMvc>2.2.0</MicrosoftAspNetCoreMvc>
+    <MicrosoftDotNetInternalAbstractions>1.0.0</MicrosoftDotNetInternalAbstractions>
+    <MicrosoftExtensionsLogging>2.2.0</MicrosoftExtensionsLogging>
+    <MicrosoftExtensionsLoggingAbstractions>2.2.0</MicrosoftExtensionsLoggingAbstractions>
+    <MicrosoftExtensionsCachingMemory>2.2.0</MicrosoftExtensionsCachingMemory>
+    <MicrosoftAspNetCoreTestHost>2.2.0</MicrosoftAspNetCoreTestHost>
+    <MicrosoftExtensionsLoggingConsole>2.2.0</MicrosoftExtensionsLoggingConsole>
+    <StackExchangeRedisStrongName>1.2.6</StackExchangeRedisStrongName>
+    <MicrosoftNETTestSdk>15.8.0</MicrosoftNETTestSdk>
+    <xunit>2.4.0</xunit>
+    <xunitrunnervisualstudio>2.4.0</xunitrunnervisualstudio>
+  </PropertyGroup>
+
+  <PropertyGroup Label="CLI Tools Versions">
+    <DotnetXUnitPackageVersion>2.4.0</DotnetXUnitPackageVersion>
+    <DotnetWatcherToolPackageVersion>2.0.0</DotnetWatcherToolPackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Xabaril Package Versions">
+    <Xabaril>2.0.0</Xabaril>
+    <XabarilInMemoryStore>2.0.0</XabarilInMemoryStore>
+    <XabarilMvc>2.0.0</XabarilMvc>
+    <XabarilRedisStore>2.0.0</XabarilRedisStore>
+  </PropertyGroup>
+
+</Project>

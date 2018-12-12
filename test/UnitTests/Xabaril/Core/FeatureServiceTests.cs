@@ -19,7 +19,7 @@ namespace UnitTests.Xabaril.Core
 
             Func<Task<bool>> act = async () => await featureService.IsEnabledAsync("feature_name_does_not_exists");
 
-            act.ShouldThrow<ArgumentException>();
+            act.Should().Throw<ArgumentException>();
         }
 
         [Fact]

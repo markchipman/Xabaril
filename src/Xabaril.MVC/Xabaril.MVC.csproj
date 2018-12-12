@@ -1,36 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Xabaril.MVC</AssemblyName>
-    <PackageId>Xabaril.MVC</PackageId>
-    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>2.0.0</Version>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <Authors>Xabaril</Authors>
-    <PackageProjectUrl>https://github.com/Xabaril/Xabaril</PackageProjectUrl>
-    <Copyright></Copyright>
-    <RepositoryUrl>https://github.com/Xabaril/Xabaril</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/Xabaril/Xabaril/blob/master/LICENSE</PackageLicenseUrl>
-    <Description>Xabaril Toogle Features MVC integration</Description>
+    <TargetFramework>$(NetStandardTargetVersion)</TargetFramework>
+    <PackageLicenseUrl>$(PackageLicenseUrl)</PackageLicenseUrl>
+    <PackageProjectUrl>$(PackageProjectUrl)</PackageProjectUrl>
+    <Description>Xabaril Toogle Features MVC integration. For more information see http://github.com/Xabaril/Xabaril </Description>
+    <PackageTags>Xabaril;Feature Toggles;AB Testing;MVC</PackageTags>
+    <Version>$(Xabaril)</Version>
+    <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
+    <Company>$(Company)</Company>
+    <Authors>$(Authors)</Authors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="$(MicrosoftAspNetCoreMvc)" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Xabaril\Xabaril.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

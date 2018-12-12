@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
-using ServiceStack.Redis;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,9 +177,9 @@ namespace FunctionalTests.Xabaril.RedisStore
                 var libraries = DependencyContext.Default.CompileLibraries
                     .Select(c => c.Name);
 
-                var redisManagerClient = new RedisManagerPool("localhost:6379");
+                var connectionMultiplexer = ConnectionMultiplexer.Connect("localhost:6379");
 
-                var store =  new RedisFeaturesStore(logger, redisManagerClient, libraries);
+                var store =  new RedisFeaturesStore(logger, connectionMultiplexer, libraries);
 
                 if (_configurer != null)
                 {

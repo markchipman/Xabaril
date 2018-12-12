@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             serviceCollection.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             serviceCollection.TryAdd(new ServiceCollection()
-                .AddScoped<SingleInstanceFactory>(provider=>
+                .AddSingleton<SingleInstanceFactory>(provider=>
                 {
                     return new SingleInstanceFactory((type) => provider.GetRequiredService(type));
                 })

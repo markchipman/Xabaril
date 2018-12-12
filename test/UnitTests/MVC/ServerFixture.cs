@@ -34,7 +34,11 @@ namespace UnitTests.MVC
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddXabaril()
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .Services
+                .AddXabaril()
                 .AddXabarilOptions(opt => opt.FailureMode = FailureMode.LogAndDisable)
                 .AddXabarilInMemoryStore(opt =>
                 {
@@ -50,14 +54,11 @@ namespace UnitTests.MVC
                         _.Add("release-date", DateTime.UtcNow.AddDays(+1));
                     });
                 });
-
-            services.AddMvc();
         }
 
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
             app.UseMvcWithDefaultRoute();
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using ServiceStack.Redis;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +14,13 @@ namespace Xabaril.RedisStore
         : IFeaturesStore
     {
         private readonly ILogger<XabarilModule> _logger;
-        private readonly IRedisClientsManager _clientManager;
+        private readonly ConnectionMultiplexer _connectionMultiplexer;
         private readonly IEnumerable<string> _assemblies;
 
-        public RedisFeaturesStore(ILogger<XabarilModule> logger, IRedisClientsManager clientManager, IEnumerable<string> assemblies)
+        public RedisFeaturesStore(ILogger<XabarilModule> logger, ConnectionMultiplexer connectionMultiplexer, IEnumerable<string> assemblies)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _clientManager = clientManager ?? throw new ArgumentNullException(nameof(clientManager));
+            _connectionMultiplexer = connectionMultiplexer ?? throw new ArgumentNullException(nameof(connectionMultiplexer));
             _assemblies = assemblies;
         }
 
@@ -31,101 +31,91 @@ namespace Xabaril.RedisStore
             var activators = new List<Type>();
 
             var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var endpoint = _connectionMultiplexer.GetEndPoints().First();
+            var server = _connectionMultiplexer.GetServer(endpoint);
+            var keys = server.Keys(pattern: $"xabaril:features:{featureName}:activator:*");
 
-            using (var client = _clientManager.GetClient())
+            if (keys.Any())
             {
-                var keys = client.GetKeysByPattern($"xabaril:features:{featureName}:activator:*");
-
-                if (keys.Any())
+                foreach (var item in keys)
                 {
-                    foreach (var item in keys)
+                    var match = regex.Match(item);
+                    if (match.Success)
                     {
-                        var match = regex.Match(item);
-                        if (match.Success)
+                        if (match.Groups.Count == 2)
                         {
-                            if (match.Groups.Count == 2)
+                            var activator = match.Groups[1]
+                                .Value;
+
+                            var type = FindType(activator);
+
+                            if (type != null)
                             {
-                                var activator = match.Groups[1]
-                                    .Value;
-
-                                var type = FindType(activator);
-
-                                if (type != null)
-                                {
-                                    activators.Add(type);
-                                }
+                                activators.Add(type);
                             }
                         }
                     }
                 }
-
-                return Task.FromResult(activators.Any() ? activators : Enumerable.Empty<Type>());
             }
+
+            return Task.FromResult(activators.Any() ? activators : Enumerable.Empty<Type>());
         }
 
-        public Task<Feature> FindFeatureAsync(string featureName)
+        public async Task<Feature> FindFeatureAsync(string featureName)
         {
             Feature feature = null;
 
-            using (var client = _clientManager.GetClient())
+            var featureKey = $"xabaril:features:{featureName}:*";
+
+            var exist = await _connectionMultiplexer.GetDatabase().KeyExistsAsync(featureKey);
+
+            if (exist)
             {
-                var featureKey = $"xabaril:features:{featureName}:*";
-
-                var exist = client.ContainsKey(featureKey);
-
-                if (exist)
-                {
-                    feature = new Feature() { Name = featureName };
-                }
+                feature = new Feature() { Name = featureName };
             }
 
-            return Task.FromResult(feature);
+            return feature;
         }
 
-        public Task<ActivatorParameter> FindParameterAsync(string name, string featureName, string activatorType)
+        public async Task<ActivatorParameter> FindParameterAsync(string name, string featureName, string activatorType)
         {
-
             ActivatorParameter parameter = null;
 
-            using (var client = _clientManager.GetReadOnlyClient())
+            var parametersKey = $"xabaril:features:{featureName}:activator:{activatorType}:parameter:{name}";
+
+            var value = await _connectionMultiplexer.GetDatabase().StringGetAsync(parametersKey);
+
+            if (value.HasValue)
             {
-                var parametersKey = $"xabaril:features:{featureName}:activator:{activatorType}:parameter:{name}";
-
-                var value = client.Get<string>(parametersKey);
-
-                if (value != null)
+                parameter = new ActivatorParameter()
                 {
-                    parameter = new ActivatorParameter()
-                    {
-                        Name = name,
-                        ActivatorType = activatorType,
-                        FeatureName = featureName,
-                        Value = value
-                    };
-                }
+                    Name = name,
+                    ActivatorType = activatorType,
+                    FeatureName = featureName,
+                    Value = value
+                };
             }
 
-            return Task.FromResult(parameter);
+            return parameter;
         }
 
-        public Task<bool> PersistConfiguratioAsync(IEnumerable<FeatureConfigurer> features)
+        public async Task<bool> PersistConfiguratioAsync(IEnumerable<FeatureConfigurer> features)
         {
-            using (var client = _clientManager.GetClient())
-            {
-                foreach (var item in features)
-                {
-                    foreach (var activator in item.Configuration)
-                    {
-                        foreach (var keyPair in activator.Value)
-                        {
-                            client.Set($"xabaril:features:{item.FeatureName}:activator:{activator.Key.FullName}:parameter:{keyPair.Key}", keyPair.Value.ToString());
-                        }
 
+            foreach (var item in features)
+            {
+                foreach (var activator in item.Configuration)
+                {
+                    foreach (var keyPair in activator.Value)
+                    {
+                        await _connectionMultiplexer.GetDatabase().StringSetAsync(
+                            $"xabaril:features:{item.FeatureName}:activator:{activator.Key.FullName}:parameter:{keyPair.Key}",
+                            keyPair.Value.ToString());
                     }
                 }
             }
 
-            return Task.FromResult(true);
+            return true;
         }
 
         Type FindType(string typeName)
