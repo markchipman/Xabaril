@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnitTests.Xabaril.Core;
 using Xabaril.MVC;
+using Xabaril.Store;
 using Xunit;
 
 namespace UnitTests.MVC
@@ -14,16 +15,15 @@ namespace UnitTests.MVC
         [Fact]
         public async Task clean_content_when_feature_is_not_active()
         {
-            var featureName = "MyFeature";
-
+            var feature = Feature.DisabledFeature("Test#1");
             var featureService = new FeatureServiceBuilder()
                 .WithInMemoryStore()
-                .WithDisabledFeature(featureName)
+                .WithDisabledFeature(feature)
                 .Build();
-
-            var tagHelper = new FeatureTagHelper(featureService);
-            tagHelper.FeatureName = featureName;
-
+            var tagHelper = new FeatureTagHelper(featureService)
+            {
+                FeatureName = feature.Name
+            };
             var context = GetTagHelperContext();
             var output = GetTagHelperOutput(tag: "feature", innerContent: "<p>some content</p>");
 
@@ -37,16 +37,15 @@ namespace UnitTests.MVC
         [Fact]
         public async Task preserve_content_when_feature_is_active()
         {
-            var featureName = "MyFeature";
-
+            var feature = Feature.EnabledFeature("Test#1");
             var featureService = new FeatureServiceBuilder()
                 .WithInMemoryStore()
-                .WithEnabledFeature(featureName)
+                .WithEnabledFeature(feature)
                 .Build();
-
-            var tagHelper = new FeatureTagHelper(featureService);
-            tagHelper.FeatureName = featureName;
-
+            var tagHelper = new FeatureTagHelper(featureService)
+            {
+                FeatureName = feature.Name
+            };
             var context = GetTagHelperContext();
             var output = GetTagHelperOutput(tag: "feature", innerContent: "<p>some content</p>");
 
@@ -80,9 +79,7 @@ namespace UnitTests.MVC
                });
 
             output.PreContent.SetContent("precontent");
-
             output.Content.SetContent(innerContent);
-
             output.PostContent.SetContent("postcontent");
 
             return output;

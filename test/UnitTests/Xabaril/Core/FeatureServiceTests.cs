@@ -2,14 +2,13 @@
 using System;
 using System.Threading.Tasks;
 using Xabaril;
+using Xabaril.Store;
 using Xunit;
 
 namespace UnitTests.Xabaril.Core
 {
     public class feature_service_should
     {
-        private const string FeatureName = "feature_test";
-
         [Fact]
         public void throws_an_argument_null_exception_if_the_feature_does_not_exists()
         {
@@ -39,23 +38,25 @@ namespace UnitTests.Xabaril.Core
         [Fact]
         public async Task indicates_whether_a_feature_is_enabled()
         {
+            var feature = Feature.EnabledFeature("Test#1");
             var featureService = new FeatureServiceBuilder()
                                     .WithInMemoryStore()
-                                    .WithEnabledFeature(FeatureName)
+                                    .WithEnabledFeature(feature)
                                     .Build();
 
-            (await featureService.IsEnabledAsync(FeatureName)).Should().Be(true);
+            (await featureService.IsEnabledAsync(feature.Name)).Should().Be(true);
         }
 
         [Fact]
         public async Task indicates_whether_a_feature_is_disabled()
         {
+            var feature = Feature.DisabledFeature("Test#1");
             var featureService = new FeatureServiceBuilder()
                                     .WithInMemoryStore()
-                                    .WithDisabledFeature(FeatureName)
+                                    .WithDisabledFeature(feature)
                                     .Build();
 
-            (await featureService.IsEnabledAsync(FeatureName)).Should().Be(false);
+            (await featureService.IsEnabledAsync(feature.Name)).Should().Be(false);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace FunctionalTests.Xabaril.RedisStore
         {
             var store = new RedisStoreBuilder().Build();
 
-            var configurer = new FeatureConfigurer("Test#1")
+            var configurer = new FeatureConfigurer(CreateFeature())
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", DateTime.UtcNow.AddDays(1));
@@ -37,10 +37,9 @@ namespace FunctionalTests.Xabaril.RedisStore
         [Fact]
         public async Task return_parameter_if_is_stored()
         {
-            var featureName = "Test#1";
             var date = DateTime.UtcNow.AddDays(1);
-
-            var configurer = new FeatureConfigurer(featureName)
+            var feature = CreateFeature();
+            var configurer = new FeatureConfigurer(feature)
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", date);
@@ -51,19 +50,18 @@ namespace FunctionalTests.Xabaril.RedisStore
                 .Build();
 
             var parameter = await store
-                .FindParameterAsync("release-date", featureName, typeof(UTCActivator).FullName);
+                .FindParameterAsync("release-date", feature.Name, typeof(UTCActivator).FullName);
 
             parameter.Should().NotBeNull();
             parameter.Value.Should().Be(date.ToString());
         }
 
         [Fact]
-        public async Task return_null_if_parameter__is_not_stored()
+        public async Task return_null_if_parameter_is_not_stored()
         {
-            var featureName = "Test#1";
             var date = DateTime.UtcNow.AddDays(1);
-
-            var configurer = new FeatureConfigurer(featureName)
+            var feature = CreateFeature();
+            var configurer = new FeatureConfigurer(feature)
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", date);
@@ -74,7 +72,7 @@ namespace FunctionalTests.Xabaril.RedisStore
                 .Build();
 
             var parameter = await store
-                .FindParameterAsync("non_existing", featureName, typeof(UTCActivator).FullName);
+                .FindParameterAsync("non_existing", feature.Name, typeof(UTCActivator).FullName);
 
             parameter.Should().BeNull();
         }
@@ -82,31 +80,26 @@ namespace FunctionalTests.Xabaril.RedisStore
         [Fact]
         public async Task return_feature_if_exist()
         {
-            var featureName = "Test#1";
+            var feature = CreateFeature();
             var date = DateTime.UtcNow.AddDays(1);
-
-            var configurer = new FeatureConfigurer(featureName)
+            var configurer = new FeatureConfigurer(feature)
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", date);
                 });
-
-
             var store = new RedisStoreBuilder()
                .WithExistingData(new List<FeatureConfigurer>() { configurer })
                .Build();
 
-            var feature = await store.FindFeatureAsync("Test#1");
+            feature = await store.FindFeatureAsync(feature.Name);
 
-            feature.Should().BeNull();
+            feature.Should().NotBeNull();
         }
 
         [Fact]
         public async Task return_null_feature_if_not_exist()
         {
-            var store = new RedisStoreBuilder()
-             .Build();
-
+            var store = new RedisStoreBuilder().Build();
             var feature = await store.FindFeatureAsync("non_existing_feature");
 
             feature.Should().BeNull();
@@ -115,10 +108,9 @@ namespace FunctionalTests.Xabaril.RedisStore
         [Fact]
         public async Task return_all_persisted_activators()
         {
-            var featureName = "Test#1";
+            var feature = CreateFeature();
             var date = DateTime.UtcNow.AddDays(1);
-
-            var configurer = new FeatureConfigurer(featureName)
+            var configurer = new FeatureConfigurer(feature)
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", date);
@@ -129,7 +121,7 @@ namespace FunctionalTests.Xabaril.RedisStore
                 .Build();
 
 
-            var activators = await store.FindFeatureActivatorsTypesAsync("Test#1");
+            var activators = await store.FindFeatureActivatorsTypesAsync(feature.Name);
 
             activators.Should().NotBeNull();
             activators.Any().Should().Be(true);
@@ -138,26 +130,22 @@ namespace FunctionalTests.Xabaril.RedisStore
         [Fact]
         public async Task return_empty_if_feature_not_exist()
         {
-            var featureName = "Test#1";
+            var feature = CreateFeature();
             var date = DateTime.UtcNow.AddDays(1);
-
-            var configurer = new FeatureConfigurer(featureName)
+            var configurer = new FeatureConfigurer(feature)
                 .WithActivator<UTCActivator>(parameters =>
                 {
                     parameters.Add("release-date", date);
                 });
-
             var store = new RedisStoreBuilder()
                 .WithExistingData(new List<FeatureConfigurer>() { configurer })
                 .Build();
-
 
             var activators = await store.FindFeatureActivatorsTypesAsync("non_existing_feature");
 
             activators.Should().NotBeNull();
             activators.Any().Should().Be(false);
         }
-
 
         class RedisStoreBuilder
         {
@@ -188,6 +176,16 @@ namespace FunctionalTests.Xabaril.RedisStore
 
                 return store;
             }
+        }
+
+        Feature CreateFeature()
+        {
+            return new Feature
+            {
+                Name = "Test#1",
+                Enabled = true,
+                CreatedOn = DateTime.UtcNow
+            };
         }
     }
 }

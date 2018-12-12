@@ -25,7 +25,6 @@ namespace Xabaril.Core
             string featureName,
             ActivatorParameterDescriptor parameterDescriptor)
         {
-
             var feature = await _featuresStore.FindFeatureAsync(featureName);
 
             if (feature != null)
@@ -43,7 +42,6 @@ namespace Xabaril.Core
                     {
                         _logger.LogError($"The parameter with name {parameterDescriptor.Name} on feature {featureName} can't be converted to type {typeof(TType).Name}. The internal exception is {ex}");
                     }
-                    
                 }
                 else
                 {

@@ -49,8 +49,8 @@ namespace Xabaril
 
             try
             {
-                var isEnabled = await _feturesService.IsEnabledAsync(featureName).ConfigureAwait(false);
-                var data = new { isEnabled = isEnabled };
+                var isEnabled = await _feturesService.IsEnabledAsync(featureName);
+                var data = new { isEnabled };
                 json = JsonConvert.SerializeObject(data);
             }
             catch (ArgumentException)

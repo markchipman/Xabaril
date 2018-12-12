@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Xabaril.Core.Activators;
+using Xabaril.Store;
 using Xunit;
 
 namespace UnitTests.Xabaril
@@ -91,7 +92,12 @@ namespace UnitTests.Xabaril
                         services.AddXabaril()
                             .AddXabarilInMemoryStore(options =>
                             {
-                                options.AddFeature(_featureName)
+                                options.AddFeature(new Feature
+                                    {
+                                        Name = _featureName,
+                                        Enabled = true,
+                                        CreatedOn = DateTime.UtcNow
+                                    })
                                     .WithActivator<UTCActivator>(p =>
                                     {
                                         foreach (var key in _parameters.Keys)

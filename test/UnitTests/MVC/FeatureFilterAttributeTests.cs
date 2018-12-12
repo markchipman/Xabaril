@@ -1,18 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Xabaril;
-using Xabaril.Core.Activators;
-using Xabaril.MVC;
 using Xunit;
 
 namespace UnitTests.MVC

@@ -6,23 +6,14 @@ namespace Xabaril.Store
 {
     public class FeatureConfigurer
     {
-        string _featureName;
+        public Feature Feature { get; }
 
-        public string FeatureName => _featureName;
+        public Dictionary<Type, Dictionary<string, object>> Configuration { get; }
 
-        Dictionary<Type, Dictionary<string, object>> _configuration;
-
-        public Dictionary<Type, Dictionary<string, object>> Configuration => _configuration;
-
-        public FeatureConfigurer(string featureName)
+        public FeatureConfigurer(Feature feature)
         {
-            if (featureName == null)
-            {
-                throw new ArgumentNullException("featureName");
-            }
-
-            _featureName = featureName;
-            _configuration = new Dictionary<Type, Dictionary<string, object>>();
+            Feature = feature ?? throw new ArgumentNullException("featureName");
+            Configuration = new Dictionary<Type, Dictionary<string, object>>();
         }
 
         public FeatureConfigurer WithActivator<TFeatureActivator>(Action<Dictionary<string, object>> configureParameters)
@@ -32,7 +23,7 @@ namespace Xabaril.Store
 
             configureParameters(parameters);
 
-            _configuration.Add(typeof(TFeatureActivator), parameters);
+            Configuration.Add(typeof(TFeatureActivator), parameters);
 
             return this;
         }

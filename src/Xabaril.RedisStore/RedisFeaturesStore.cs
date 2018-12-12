@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,7 @@ namespace Xabaril.RedisStore
         public Task<IEnumerable<Type>> FindFeatureActivatorsTypesAsync(string featureName)
         {
             const string pattern = @"activator:([a-zA-Z0-9\.]+):parameter";
-
             var activators = new List<Type>();
-
             var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var endpoint = _connectionMultiplexer.GetEndPoints().First();
             var server = _connectionMultiplexer.GetServer(endpoint);
@@ -44,11 +43,8 @@ namespace Xabaril.RedisStore
                     {
                         if (match.Groups.Count == 2)
                         {
-                            var activator = match.Groups[1]
-                                .Value;
-
+                            var activator = match.Groups[1].Value;
                             var type = FindType(activator);
-
                             if (type != null)
                             {
                                 activators.Add(type);
@@ -64,9 +60,7 @@ namespace Xabaril.RedisStore
         public async Task<Feature> FindFeatureAsync(string featureName)
         {
             Feature feature = null;
-
-            var featureKey = $"xabaril:features:{featureName}:*";
-
+            var featureKey = $"xabaril:features:{featureName}";
             var exist = await _connectionMultiplexer.GetDatabase().KeyExistsAsync(featureKey);
 
             if (exist)
@@ -80,9 +74,7 @@ namespace Xabaril.RedisStore
         public async Task<ActivatorParameter> FindParameterAsync(string name, string featureName, string activatorType)
         {
             ActivatorParameter parameter = null;
-
             var parametersKey = $"xabaril:features:{featureName}:activator:{activatorType}:parameter:{name}";
-
             var value = await _connectionMultiplexer.GetDatabase().StringGetAsync(parametersKey);
 
             if (value.HasValue)
@@ -99,17 +91,22 @@ namespace Xabaril.RedisStore
             return parameter;
         }
 
-        public async Task<bool> PersistConfiguratioAsync(IEnumerable<FeatureConfigurer> features)
+        public async Task<bool> PersistConfiguratioAsync(IEnumerable<FeatureConfigurer> featureConfigurers)
         {
-
-            foreach (var item in features)
+            foreach (var featureConfigurer in featureConfigurers)
             {
-                foreach (var activator in item.Configuration)
+                await _connectionMultiplexer
+                    .GetDatabase()
+                    .StringSetAsync(
+                        $"xabaril:features:{featureConfigurer.Feature.Name}",
+                        JsonConvert.SerializeObject(featureConfigurer.Feature));
+
+                foreach (var activator in featureConfigurer.Configuration)
                 {
                     foreach (var keyPair in activator.Value)
                     {
                         await _connectionMultiplexer.GetDatabase().StringSetAsync(
-                            $"xabaril:features:{item.FeatureName}:activator:{activator.Key.FullName}:parameter:{keyPair.Key}",
+                            $"xabaril:features:{featureConfigurer.Feature.Name}:activator:{activator.Key.FullName}:parameter:{keyPair.Key}",
                             keyPair.Value.ToString());
                     }
                 }

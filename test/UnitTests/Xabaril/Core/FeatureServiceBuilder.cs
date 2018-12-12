@@ -59,11 +59,11 @@ namespace UnitTests.Xabaril.Core
             return this;
         }
 
-        public FeatureServiceBuilder WithEnabledFeature(string featureName)
+        public FeatureServiceBuilder WithEnabledFeature(Feature feature)
         {
             _featureActivator = new AlwaysEnabledFeatureActivator();
 
-            _featureConfigurer = new FeatureConfigurer(featureName)
+            _featureConfigurer = new FeatureConfigurer(feature)
                 .WithActivator<AlwaysEnabledFeatureActivator>(@params =>
                 {
 
@@ -72,15 +72,10 @@ namespace UnitTests.Xabaril.Core
             return this;
         }
 
-        public FeatureServiceBuilder WithDisabledFeature(string featureName)
+        public FeatureServiceBuilder WithDisabledFeature(Feature feature)
         {
             _featureActivator = new AlwaysDisabledFeatureActivator();
-
-            _featureConfigurer = new FeatureConfigurer(featureName)
-                .WithActivator<AlwaysDisabledFeatureActivator>(@params =>
-                {
-
-                });
+            _featureConfigurer = new FeatureConfigurer(feature);
 
             return this;
         }

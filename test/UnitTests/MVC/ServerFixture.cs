@@ -10,6 +10,7 @@ using System.Net.Http;
 using Xabaril;
 using Xabaril.Core.Activators;
 using Xabaril.MVC;
+using Xabaril.Store;
 
 namespace UnitTests.MVC
 {
@@ -42,13 +43,13 @@ namespace UnitTests.MVC
                 .AddXabarilOptions(opt => opt.FailureMode = FailureMode.LogAndDisable)
                 .AddXabarilInMemoryStore(opt =>
                 {
-                    opt.AddFeature("MyFeature")
+                    opt.AddFeature(Feature.EnabledFeature("MyFeature"))
                     .WithActivator<UTCActivator>(_ =>
                     {
                         _.Add("release-date", DateTime.UtcNow.AddDays(-1));
                     });
 
-                    opt.AddFeature("NonActiveFeature")
+                    opt.AddFeature(Feature.DisabledFeature("NonActiveFeature"))
                     .WithActivator<UTCActivator>(_ =>
                     {
                         _.Add("release-date", DateTime.UtcNow.AddDays(+1));

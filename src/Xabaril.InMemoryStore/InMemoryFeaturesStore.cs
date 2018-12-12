@@ -98,16 +98,10 @@ namespace Xabaril.InMemoryStore
             {
                 foreach (var item in features)
                 {
-                    var feature = new Feature()
-                    {
-                        CreatedOn = DateTime.UtcNow,
-                        Name = item.FeatureName
-                    };
+                    SetOnCache(string.Format(FEATURE_CACHE_KEY_FORMAT, item.Feature.Name), item.Feature);
+                    SetOnCache(string.Format(CONFIGURATION_CACHE_KEY_FORMAT, item.Feature.Name), item.Configuration);
 
-                    SetOnCache(string.Format(FEATURE_CACHE_KEY_FORMAT, item.FeatureName), feature);
-                    SetOnCache(string.Format(CONFIGURATION_CACHE_KEY_FORMAT, item.FeatureName), item.Configuration);
-
-                    _logger.LogInformation($"Persisted feature with name {item.FeatureName}");
+                    _logger.LogInformation($"Persisted feature with name {item.Feature.Name}");
                 }
                 persisted = true;
             }

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xabaril;
@@ -13,19 +14,18 @@ namespace UnitTests.Xabaril.InMemoryStore
 {
     public class inmemory_feature_store_should
     {
-        string featureName = "sample_feature";
-
         [Fact]
         public async Task find_feature_if_exist()
         {
+            var feature = CreateFeature();
             var store = new FeatureStoreBuilder()
-                .WithFeatureConfigurer(new FeatureConfigurer(featureName)
+                .WithFeatureConfigurer(new FeatureConfigurer(feature)
                     .WithActivator<UserActivator>(@params =>
                     {
                         @params.Add("USER", "uzorrilla");
                     })).Build();
 
-            (await store.FindFeatureAsync(featureName)).Name.Should().Be(featureName);
+            (await store.FindFeatureAsync(feature.Name)).Name.Should().Be(feature.Name);
         }
 
         [Fact]
@@ -42,55 +42,65 @@ namespace UnitTests.Xabaril.InMemoryStore
         [Fact]
         public async Task find_parameter_if_exist()
         {
+            const string Key = "USER";
+            const string Value = "uzorrilla";
+            var feature = CreateFeature();
             var store = new FeatureStoreBuilder()
-                .WithFeatureConfigurer(new FeatureConfigurer(featureName)
+                .WithFeatureConfigurer(new FeatureConfigurer(feature)
                     .WithActivator<UserActivator>(@params =>
                     {
-                        @params.Add("USER", "uzorrilla");
+                        @params.Add(Key, Value);
                     })).Build();
 
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).Name))
-                .Should().NotBeNull();
-
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).Name)).Name
-                .Should().Be("USER");
-
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).Name)).FeatureName
-                .Should().Be(featureName);
-
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).Name)).ActivatorType
-                .Should().Be(typeof(UserActivator).Name);
-
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).Name)).Value
-                .Should().Be("uzorrilla");
+            var parameter = await store.FindParameterAsync(Key, feature.Name, typeof(UserActivator).Name);
+                
+            parameter.Should().NotBeNull();
+            parameter.Name.Should().Be(Key);
+            parameter.FeatureName.Should().Be(feature.Name);
+            parameter.ActivatorType.Should().Be(typeof(UserActivator).Name);
+            parameter.Value.Should().Be(Value);
         }
 
         [Fact]
         public async Task return_null_if_use_fullname_type_value()
         {
+            var feature = CreateFeature();
             var store = new FeatureStoreBuilder()
-                .WithFeatureConfigurer(new FeatureConfigurer(featureName)
+                .WithFeatureConfigurer(new FeatureConfigurer(feature)
                     .WithActivator<UserActivator>(@params =>
                     {
                         @params.Add("USER", "uzorrilla");
                     })).Build();
 
-            (await store.FindParameterAsync("USER", featureName, typeof(UserActivator).FullName))
-                .Should().BeNull();
+            var parameter = await store.FindParameterAsync("USER", feature.Name, typeof(UserActivator).FullName);
+            
+            parameter.Should().BeNull();
         }
 
         [Fact]
         public async Task return_null_parameter_if_not_exist()
         {
+            var feature = CreateFeature();
             var store = new FeatureStoreBuilder()
-                .WithFeatureConfigurer(new FeatureConfigurer(featureName)
+                .WithFeatureConfigurer(new FeatureConfigurer(CreateFeature())
                     .WithActivator<UserActivator>(@params =>
                     {
                         @params.Add("USER", "uzorrilla");
                     })).Build();
 
-            (await store.FindParameterAsync("non_existing_parameter", featureName, typeof(UserActivator).Name))
-                .Should().BeNull();
+            var parameter = await store.FindParameterAsync("non_existing_parameter", feature.Name, typeof(UserActivator).Name);
+
+            parameter.Should().BeNull();
+        }
+
+        Feature CreateFeature()
+        {
+            return new Feature
+            {
+                Name = "Test#1",
+                Enabled = true,
+                CreatedOn = DateTime.UtcNow
+            };
         }
 
         private class FeatureStoreBuilder

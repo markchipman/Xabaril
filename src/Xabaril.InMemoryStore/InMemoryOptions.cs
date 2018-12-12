@@ -9,14 +9,14 @@ namespace Xabaril.InMemoryStore
 
         public List<FeatureConfigurer> FeatureConfiguration => _featuresConfiguration;
 
-        public FeatureConfigurer AddFeature(string featureName)
+        public FeatureConfigurer AddFeature(Feature feature)
         {
             if (_featuresConfiguration == null)
             {
                 _featuresConfiguration = new List<FeatureConfigurer>();
             }
 
-            var featureConfiguration = new FeatureConfigurer(featureName);
+            var featureConfiguration = new FeatureConfigurer(feature);
 
             _featuresConfiguration.Add(featureConfiguration);
 

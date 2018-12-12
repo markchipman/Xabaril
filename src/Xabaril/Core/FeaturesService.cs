@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -36,6 +35,11 @@ namespace Xabaril.Core
                 if (feature == null)
                 {
                     throw new ArgumentException(nameof(featureName));
+                }
+
+                if (feature.IsDisabled())
+                {
+                    return false;
                 }
 
                 var types = await _featuresStore.FindFeatureActivatorsTypesAsync(featureName);
