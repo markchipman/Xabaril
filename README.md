@@ -335,3 +335,13 @@ services.AddXabaril()
 
 
 ```
+## Contributing
+
+Xabaril wouldn't be possible without the time and effort of its contributors. The team is made up of Unai Zorrilla Castro [@unaizorrilla](https://github.com/unaizorrilla) and Luis Ruiz Pavón [@lurumad](https://github.com/lurumad).
+
+If you want to contribute to the project and make it better, your help is very welcome. You can contribute with helpful bug reports, features requests and also submitting new features with pull requests.
+
+1. Read and follow the [Don't push your pull requests](https://www.igvita.com/2011/12/19/dont-push-your-pull-requests/)
+2. Build.ps1 is working on local and AppVeyor.
+3. Follow the code guidelines and conventions.
+4. New features are not only code, tests and documentation are also mandatory.

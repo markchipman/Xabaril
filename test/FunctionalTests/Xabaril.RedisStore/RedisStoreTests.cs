@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FunctionalTests.Base;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
@@ -16,7 +17,7 @@ namespace FunctionalTests.Xabaril.RedisStore
 {
     public class redis_store_should
     {
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_true_if_configuration_is_persisted_on_redis()
         {
             var store = new RedisStoreBuilder().Build();
@@ -34,7 +35,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             result.Should().Be(true);
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_parameter_if_is_stored()
         {
             var date = DateTime.UtcNow.AddDays(1);
@@ -56,7 +57,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             parameter.Value.Should().Be(date.ToString());
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_null_if_parameter_is_not_stored()
         {
             var date = DateTime.UtcNow.AddDays(1);
@@ -77,7 +78,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             parameter.Should().BeNull();
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_feature_if_exist()
         {
             var feature = CreateFeature();
@@ -96,7 +97,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             feature.Should().NotBeNull();
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_null_feature_if_not_exist()
         {
             var store = new RedisStoreBuilder().Build();
@@ -105,7 +106,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             feature.Should().BeNull();
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_all_persisted_activators()
         {
             var feature = CreateFeature();
@@ -127,7 +128,7 @@ namespace FunctionalTests.Xabaril.RedisStore
             activators.Any().Should().Be(true);
         }
 
-        [Fact]
+        [SkipOnAppVeyor]
         public async Task return_empty_if_feature_not_exist()
         {
             var feature = CreateFeature();

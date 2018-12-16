@@ -23,7 +23,6 @@ namespace Xabaril.Core
             _singleInstanceFactory = singleInstanceFactory ?? throw new ArgumentNullException(nameof(singleInstanceFactory));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _xabarilOptions = options?.Value ?? new XabarilOptions();
-          
         }
 
         public async Task<bool> IsEnabledAsync(string featureName)
