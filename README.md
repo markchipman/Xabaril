@@ -337,7 +337,9 @@ services.AddXabaril()
 ```
 ## Contributing
 
-Xabaril wouldn't be possible without the time and effort of its contributors. The team is made up of Unai Zorrilla Castro [@unaizorrilla](https://github.com/unaizorrilla) and Luis Ruiz Pavón [@lurumad](https://github.com/lurumad).
+Xabaril wouldn't be possible without the time and effort of its contributors. The team is made up of Unai Zorrilla Castro [@unaizorrilla](https://github.com/unaizorrilla), Luis Ruiz Pavón [@lurumad](https://github.com/lurumad) and Carlos Landeras [@carloslanderas](https://github.com/carloslanderas).
+
+*Our valued committers are*: Hugo Biarge @hbiarge, Luis Fraile @lfraile.
 
 If you want to contribute to the project and make it better, your help is very welcome. You can contribute with helpful bug reports, features requests and also submitting new features with pull requests.
 
