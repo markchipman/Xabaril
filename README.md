@@ -25,16 +25,24 @@ A **Feature** is basically a name which allow us to define a particular feature.
 2. In the _ConfigureServices_ method of _Startup.cs_, register Xabaril, defining one or more features.
 
 	```csharp
-	services
-		.AddXabaril()
-		.AddXabarilInMemoryStore(opt =>
-		{
-			opt.AddFeature("MyFeature")
-			.WithActivator<UTCActivator>(parameters =>
-			{
-				parameters.Add("release-date", DateTime.UtcNow.AddDays(-1));
-			});
-		});
+        services.AddXabaril()
+        .AddXabarilInMemoryStore(options =>
+        {
+            options.AddFeature(
+                new Feature
+                {
+                    Name = _featureName,
+                    Enabled = true,
+                    CreatedOn = DateTime.UtcNow
+                })
+                .WithActivator<UTCActivator>(p =>
+                {
+                    foreach (var key in _parameters.Keys)
+                    {
+                        p.Add(key, _parameters[key]);
+                    }
+                });
+        });
 	```
 4. In the _Configure_ method, insert middleware to expose the generated Xabaril as JSON endpoint.
 
@@ -155,12 +163,17 @@ With *roll-out* activators we can set a value with which we can do a rool-out of
 
 ```csharp
 
- var configurer = new FeatureConfigurer("Test#1")
-                .WithActivator<UTCActivator>(parameters =>
-                {
-                    parameters.Add("release-date", DateTime.UtcNow.AddDays(1));
-                });
-
+var configurer = new FeatureConfigurer(
+    new Feature
+    {
+        Name = "test#1",
+        Enabled = true,
+        CreatedOn = DateTime.UtcNow
+    })
+    .WithActivator<UTCActivator>(parameters =>
+    {
+        parameters.Add("release-date", DateTime.UtcNow.AddDays(1));
+    });
 
 ```
 
@@ -172,13 +185,18 @@ With **FromToActivator** you can define the dates between the feature is active 
 
 ```csharp
 
- var configurer = new FeatureConfigurer("Test#1")
-               .WithActivator<FromToActivator>(parameters =>
-               {
-                   parameters.Add("release-from-date", DateTime.UtcNow.AddDays(1));
-                   parameters.Add("release-to-date", DateTime.UtcNow.AddDays(5));
-               });
-
+var configurer = new FeatureConfigurer(
+    new Feature
+    {
+        Name = "test#1",
+        Enabled = true,
+        CreatedOn = DateTime.UtcNow
+    })
+    .WithActivator<FromToActivator>(parameters =>
+    {
+        parameters.Add("release-from-date", DateTime.UtcNow.AddDays(1));
+        parameters.Add("release-to-date", DateTime.UtcNow.AddDays(5));
+    });
 
 ```
 
@@ -190,11 +208,17 @@ With **UserActivator** you can enable any feature for specified authenticated us
 
 ```csharp
 
-var configurer = new FeatureConfigurer("Test#1")
-               .WithActivator<UserActivator>(parameters =>
-               {
-                   parameters.Add("user","user1;user2;user3");
-               });
+var configurer = new FeatureConfigurer(
+    new Feature
+    {
+        Name = "test#1",
+        Enabled = true,
+        CreatedOn = DateTime.UtcNow
+    })
+    .WithActivator<UserActivator>(parameters =>
+    {
+        parameters.Add("user","user1;user2;user3");
+    });
 
 ``` 
 
@@ -204,11 +228,17 @@ Like **UserActivator** **RoleActivator** define the Role that the user need to h
 
 ```csharp
 
-var configurer = new FeatureConfigurer("Test#1")
-               .WithActivator<RoleActivator>(parameters =>
-               {
-                   parameters.Add("role","admin");
-               });
+var configurer = new FeatureConfigurer(
+    new Feature
+    {
+        Name = "test#1",
+        Enabled = true,
+        CreatedOn = DateTime.UtcNow
+    })
+    .WithActivator<RoleActivator>(parameters =>
+    {
+        parameters.Add("role","admin");
+    });
 
 ``` 
 
@@ -218,11 +248,17 @@ With location activator you can specify the IP request countries on some feature
 
 ```csharp
 
-var configurer = new FeatureConfigurer("Test#1")
-               .WithActivator<LocationActivator>(parameters =>
-               {
-                   parameters.Add("locations","Spain;USA");
-               });
+var configurer = new FeatureConfigurer(
+    new Feature
+    {
+        Name = "test#1",
+        Enabled = true,
+        CreatedOn = DateTime.UtcNow
+    })
+    .WithActivator<LocationActivator>(parameters =>
+    {
+        parameters.Add("locations","Spain;USA");
+    });
 
 ```
 
@@ -264,15 +300,21 @@ When you have a new implementation for any service in Xabaril you can override u
 
  services.AddXabaril()
         .AddXabarilOptions(options =>
-                {
-                    options.FailureMode = Xabaril.FailureMode.LogAndDisable;
+        {
+            options.FailureMode = Xabaril.FailureMode.LogAndDisable;
         })
         .AddXabarilInMemoryStore(options =>
         {
-              options.AddFeature("Test#1")
-                     .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
+            options.AddFeature(
+                new Feature
+                {
+                    Name = "LocationActivator",
+                    Enabled = true,
+                    CreatedOn = DateTime.UtcNow
+                })
+                .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
 
-         }).AddGeoLocationProvider<IPApiLocationProvider>();
+        }).AddGeoLocationProvider<IPApiLocationProvider>();
 
 ```
 
@@ -297,14 +339,20 @@ Install-Package Xabaril.InMemoryStore
  services.AddXabaril()
         .AddXabarilOptions(options =>
         {
-                    options.FailureMode = Xabaril.FailureMode.LogAndDisable;
+            options.FailureMode = Xabaril.FailureMode.LogAndDisable;
         })
         .AddXabarilInMemoryStore(options =>
         {
-              options.AddFeature("Test#1")
-                     .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
+            options.AddFeature(
+                new Feature
+                {
+                    Name = "LocationActivator",
+                    Enabled = true,
+                    CreatedOn = DateTime.UtcNow
+                })
+                .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
 
-         }).AddGeoLocationProvider<IPApiLocationProvider>();
+        }).AddGeoLocationProvider<IPApiLocationProvider>();
 
 ```
 
@@ -328,7 +376,13 @@ services.AddXabaril()
         {
             options.RedisHost = "localhost:6379";
 
-            options.AddFeature("LocationActivator")
+            options.AddFeature(
+                new Feature
+                {
+                    Name = "LocationActivator",
+                    Enabled = true,
+                    CreatedOn = DateTime.UtcNow
+                })
                 .WithActivator<LocationActivator>(_ => _.Add("locations", "Spain;United States"));
 
         }).AddGeoLocationProvider<IPApiLocationProvider>();
@@ -337,7 +391,7 @@ services.AddXabaril()
 ```
 ## Contributing
 
-Xabaril wouldn't be possible without the time and effort of its contributors. The team is made up of Unai Zorrilla Castro [@unaizorrilla](https://github.com/unaizorrilla), Luis Ruiz Pavón [@lurumad](https://github.com/lurumad) and Carlos Landeras [@carloslanderas](https://github.com/carloslanderas).
+Xabaril wouldn't be possible without the time and effort of its contributors. The team is made up of Unai Zorrilla Castro [@unaizorrilla](https://github.com/unaizorrilla), Luis Ruiz Pavï¿½n [@lurumad](https://github.com/lurumad) and Carlos Landeras [@carloslanderas](https://github.com/carloslanderas).
 
 *Our valued committers are*: Hugo Biarge @hbiarge, Luis Fraile @lfraile.
 
